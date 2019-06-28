@@ -2,11 +2,11 @@ import { config } from 'dotenv'
 config({ path: '.env' })
 
 import { prisma } from './generated/prisma-client'
-import { GraphQLServer } from 'graphql-yoga'
+import { GraphQLServer, Options } from 'graphql-yoga'
 
 import { schema } from './schema'
 
-const options = {
+const options: Options = {
   port: process.env.SERVER_PORT,
 }
 

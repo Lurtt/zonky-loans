@@ -1,21 +1,26 @@
-import { stringArg } from 'nexus'
 import { prismaObjectType } from 'nexus-prisma'
+
+import { zonkyClient } from '../../api'
+import { Loan } from '../../types'
+
+const ratingSet = new Set()
+const addRating = (loan: Loan) => ratingSet.add(loan.rating)
+
+const ratings = {
+  type: 'String',
+  resolve: async () => {
+    const { data } = await zonkyClient.get('/marketplace')
+    if (ratingSet.size === 0) {
+      data.forEach(addRating);
+    }
+
+    return [...ratingSet]
+  }
+}
 
 export const Query = prismaObjectType({
   name: 'Query',
-  definition(t) {
-    t.prismaFields(['post'])
-    t.list.field('feed', {
-      type: 'Post',
-      resolve: (_, args, ctx) =>
-        ctx.prisma.posts({ where: { published: true } }),
-    })
-    t.list.field('postsByUser', {
-      type: 'Post',
-      args: { email: stringArg() },
-      resolve: (_, { email }, ctx) =>
-        ctx.prisma.posts({ where: { author: { email } } }),
-    })
+  definition: t => {
+    t.list.field('ratings', ratings)
   },
 })
-
