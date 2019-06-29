@@ -1,18 +1,51 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { ThemeProvider } from 'styled-components'
+import { Query } from 'react-apollo'
+import { gql } from 'apollo-boost'
 
 import { GlobalStyle, theme } from './components/settings'
 import { Header, Root, Image, Link } from './components/atoms'
 import logo from './logo.svg'
+
+const RATINGS_QUERY = gql`
+  query RATINGS_QUERY {
+    ratings
+  }
+`
+
+interface RatingData {
+  ratings: string[]
+}
+
+const Ratings: React.FC = () => (
+  <Query<RatingData> query={RATINGS_QUERY}>
+    {({ loading, error, data }) => {
+      if (loading) return <p>Loading...</p>
+      if (error) return <p>Error :(</p>
+
+      return (
+        <Fragment>
+          <p>
+            Edit <code>src/App.tsx</code> and save to reload.
+          </p>
+          <div>
+            {data &&
+              data.ratings.map((rating: string, index) => (
+                <p key={index}>{rating}</p>
+              ))}
+          </div>
+        </Fragment>
+      )
+    }}
+  </Query>
+)
 
 const App: React.FC = () => (
   <ThemeProvider theme={theme}>
     <Root>
       <Header>
         <Image src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <Ratings />
         <Link
           className="App-link"
           href="https://reactjs.org"
