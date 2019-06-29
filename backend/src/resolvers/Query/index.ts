@@ -1,11 +1,12 @@
 import { prismaObjectType } from 'nexus-prisma'
-import { sort } from 'ramda'
+import { queryField, stringArg } from 'nexus'
+import { sort, filter } from 'ramda'
 
-import { zonkyClient } from '../../api'
 import { Loan } from '../../types'
+import { alphabetical, byRating, totalAmountByRating } from '../../utils'
+import { zonkyClient } from '../../api'
 
 const ratingSet = new Set()
-const alphabetical = (a: string, b: string) =>  a.localeCompare(b)
 const addRating = (loan: Loan) => ratingSet.add(loan.rating)
 
 const ratings = {
@@ -20,9 +21,24 @@ const ratings = {
   }
 }
 
-export const Query = prismaObjectType({
+export const averageLoansAmount = queryField("averageLoansAmount", {
+  type: 'Float',
+  args: {
+    rating: stringArg({ required: true }),
+  },
+  resolve: async (_, { rating }) => {
+    const { data } = await zonkyClient.get('/marketplace')
+    const loansByRating = filter(byRating(rating.toUpperCase()), data)
+
+    return totalAmountByRating(loansByRating)
+  },
+});
+
+const QueryObject = {
   name: 'Query',
   definition: t => {
     t.list.field('ratings', ratings)
   },
-})
+}
+
+export const Query = prismaObjectType<'Query'>(QueryObject)
