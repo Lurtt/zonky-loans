@@ -1,3 +1,4 @@
+export * from './colors'
 export * from './animations'
 export * from './header'
 export * from './root'
