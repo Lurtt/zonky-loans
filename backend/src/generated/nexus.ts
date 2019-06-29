@@ -47,6 +47,7 @@ export interface NexusGenFieldTypes {
     createUser: NexusGenRootTypes['User']; // User!
   }
   Query: { // field return type
+    averageLoansAmount: number; // Float!
     ratings: string[]; // [String!]!
   }
   User: { // field return type
@@ -60,6 +61,11 @@ export interface NexusGenArgTypes {
   Mutation: {
     createUser: { // args
       data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
+    }
+  }
+  Query: {
+    averageLoansAmount: { // args
+      rating: string; // String!
     }
   }
 }
