@@ -4,7 +4,7 @@ import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
 
 import { GlobalStyle, theme } from './components/settings'
-import { Header, Root, Image, Link } from './components/atoms'
+import { Header, Root, Image, Link, Select } from './components/atoms'
 import logo from './logo.svg'
 
 const RATINGS_QUERY = gql`
@@ -23,17 +23,13 @@ const Ratings: React.FC = () => (
       if (loading) return <p>Loading...</p>
       if (error) return <p>Error :(</p>
 
+      const { ratings }: any = data
       return (
         <Fragment>
+          <Select values={ratings} onChange={val => val} />
           <p>
             Edit <code>src/App.tsx</code> and save to reload.
           </p>
-          <div>
-            {data &&
-              data.ratings.map((rating: string, index) => (
-                <p key={index}>{rating}</p>
-              ))}
-          </div>
         </Fragment>
       )
     }}
