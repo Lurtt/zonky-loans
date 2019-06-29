@@ -7,7 +7,7 @@ import * as types from './resolvers'
 
 export const schema = makePrismaSchema({
   types,
-
+  
   prisma: {
     datamodelInfo,
     client: prisma,
