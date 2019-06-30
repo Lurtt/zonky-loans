@@ -7,7 +7,7 @@ export const Page: React.FC = ({ children }) => (
     height="100vh"
     templateRows="auto 1fr auto"
     gap="1.5rem 0"
-    padding="0 20vw"
+    padding="0 16vw"
   >
     {children}
   </Grid>

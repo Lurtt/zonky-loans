@@ -64,6 +64,7 @@ const Ratings: React.FC = () => {
                           type="button"
                           value={rating}
                           onClick={calculateAmount(client)}
+                          data-testid="btn-rating"
                         >
                           {rating}
                         </Button>
@@ -74,7 +75,9 @@ const Ratings: React.FC = () => {
               )}
             </ApolloConsumer>
             {selectedRating && (
-              <Title align="center">{averageLoansAmount.toFixed(2)}</Title>
+              <Title align="center" data-testid="total-average-amount">
+                {averageLoansAmount.toFixed(2)}
+              </Title>
             )}
           </Fragment>
         )
