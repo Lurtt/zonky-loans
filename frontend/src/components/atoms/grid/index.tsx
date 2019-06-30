@@ -1,4 +1,5 @@
 import styled, { ThemedStyledProps } from 'styled-components'
+import posed from 'react-pose'
 
 import { Theme } from '../../settings'
 
@@ -57,3 +58,15 @@ Grid.defaultProps = {
   textAlign: 'initial',
   lineHeight: 'initial',
 }
+
+export const PosedGrid = posed(Grid)({
+  init: {
+    y: '-4rem',
+  },
+  enter: {
+    opacity: 1,
+    y: 0,
+    staggerChildren: 150,
+  },
+  exit: { opacity: 0 },
+})

@@ -3,4 +3,5 @@ export const cs = {
   RatingTitle: 'Vyber si rating',
   Engine: 'Šlape díky',
   Loading: 'Načítam...',
+  Error: 'Neco je zle :(',
 }

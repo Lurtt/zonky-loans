@@ -18,7 +18,11 @@ export const Root: React.FC = () => {
           setAverageLoansAmount={setAverageLoansAmount}
         />
         {selectedRating && (
-          <Title align="center" data-testid="total-average-amount">
+          <Title
+            padding="4rem 0 0 0"
+            align="center"
+            data-testid="total-average-amount"
+          >
             {averageLoansAmount.toFixed(2)}
           </Title>
         )}
