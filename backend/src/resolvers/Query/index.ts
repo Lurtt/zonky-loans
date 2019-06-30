@@ -34,7 +34,7 @@ export const averageLoansAmount = queryField("averageLoansAmount", {
   },
 });
 
-const QueryObject = {
+const QueryObject: any = {
   name: 'Query',
   definition: (t: any) => {
     t.list.field('ratings', ratings)
