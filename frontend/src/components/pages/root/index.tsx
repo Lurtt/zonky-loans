@@ -1,17 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Grid } from '../../atoms'
+import { Grid, Title } from '../../atoms'
 import { Header, Footer } from '../../molecules'
+import { Ratings } from '../../organisms'
 import { Page } from '../../templates'
 
-export interface RootProps extends React.ComponentProps<'div'> {}
+export const Root: React.FC = () => {
+  const [averageLoansAmount, setAverageLoansAmount] = useState(0)
+  const [selectedRating, setSelectedRating] = useState('')
 
-export const Root: React.FC = ({ children }) => (
-  <Page>
-    <Header />
-    <Grid as="main" alignItems="start" templateRows="max-content max-content">
-      {children}
-    </Grid>
-    <Footer />
-  </Page>
-)
+  return (
+    <Page>
+      <Header />
+      <Grid as="main" alignItems="start" templateRows="max-content max-content">
+        <Ratings
+          setSelectedRating={setSelectedRating}
+          setAverageLoansAmount={setAverageLoansAmount}
+        />
+        {selectedRating && (
+          <Title align="center" data-testid="total-average-amount">
+            {averageLoansAmount.toFixed(2)}
+          </Title>
+        )}
+      </Grid>
+      <Footer />
+    </Page>
+  )
+}
