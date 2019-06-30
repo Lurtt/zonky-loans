@@ -3,4 +3,5 @@ export const en = {
   RatingTitle: 'Choose rating',
   Engine: 'Powered by',
   Loading: 'Loading...',
+  Error: 'Error :(',
 }
