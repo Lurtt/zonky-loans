@@ -28,7 +28,7 @@ export const averageLoansAmount = queryField("averageLoansAmount", {
   },
   resolve: async (_, { rating }) => {
     const { data } = await zonkyClient.get('/marketplace')
-    const loansByRating = filter(byRating(rating.toUpperCase()), data)
+    const loansByRating: Loan[] = filter(byRating(rating.toUpperCase()), data)
 
     return totalAmountByRating(loansByRating)
   },
@@ -36,7 +36,7 @@ export const averageLoansAmount = queryField("averageLoansAmount", {
 
 const QueryObject = {
   name: 'Query',
-  definition: t => {
+  definition: (t: any) => {
     t.list.field('ratings', ratings)
   },
 }

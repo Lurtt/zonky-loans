@@ -2,10 +2,11 @@ import React, { Fragment, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 import { Query, ApolloConsumer } from 'react-apollo'
 import { gql } from 'apollo-boost'
+import { v4 } from 'uuid'
 
 import { GlobalStyle, theme } from './components/settings'
-import { Header, Root, Image, Select } from './components/atoms'
-import logo from './logo.svg'
+import { Card, Grid, Button, Title } from './components/atoms'
+import { Root } from './components/pages'
 
 const RATINGS_QUERY = gql`
   query RATINGS_QUERY {
@@ -27,7 +28,8 @@ const Ratings: React.FC = () => {
   const [averageLoansAmount, setAverageLoansAmount] = useState(0)
   const [selectedRating, setSelectedRating] = useState('')
 
-  const calculateAmount = (client: any) => async (rating: string) => {
+  const calculateAmount = (client: any) => async (event: any) => {
+    const rating = event.target.value
     const { data } = await client.query({
       query: AVERAGE_LOANS_AMOUNT_QUERY,
       variables: { rating },
@@ -47,20 +49,32 @@ const Ratings: React.FC = () => {
           <Fragment>
             <ApolloConsumer>
               {client => (
-                <Select
-                  label="rating"
-                  values={ratings}
-                  onChange={calculateAmount(client)}
-                />
+                <Fragment>
+                  <Title size="1.5rem">Choose rating</Title>
+                  <Grid
+                    padding="2rem 0"
+                    templateColumns="repeat(auto-fit, minmax(5.5rem, 1fr))"
+                    gap="1.5rem"
+                  >
+                    {ratings.map((rating: string) => (
+                      <Grid as={Card} key={v4()} padding="0.5rem">
+                        <Button
+                          padding="0"
+                          disabled={loading}
+                          type="button"
+                          value={rating}
+                          onClick={calculateAmount(client)}
+                        >
+                          {rating}
+                        </Button>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Fragment>
               )}
             </ApolloConsumer>
-            {selectedRating ? (
-              <p>
-                Average loans amount for rating {selectedRating} is{' '}
-                {averageLoansAmount.toFixed(2)}
-              </p>
-            ) : (
-              <p>Select rating</p>
+            {selectedRating && (
+              <Title align="center">{averageLoansAmount.toFixed(2)}</Title>
             )}
           </Fragment>
         )
@@ -72,10 +86,7 @@ const Ratings: React.FC = () => {
 const App: React.FC = () => (
   <ThemeProvider theme={theme}>
     <Root>
-      <Header>
-        <Image src={logo} className="App-logo" alt="logo" />
-        <Ratings />
-      </Header>
+      <Ratings />
       <GlobalStyle />
     </Root>
   </ThemeProvider>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { v4 } from 'uuid'
 
 interface SelectProps {
   values: string[]
@@ -19,8 +20,8 @@ export const Select: React.FC<SelectProps> = ({
     defaultValue={label}
   >
     <option disabled>{label}</option>
-    {values.map((value, index) => (
-      <option key={`${value}-${index}`} value={value}>
+    {values.map(value => (
+      <option key={v4()} value={value}>
         {value}
       </option>
     ))}

@@ -27,6 +27,7 @@
     "ramda": "^0.26.1"
   },
   "devDependencies": {
+    "@types/ramda": "^0.26.12",
     "ts-node": "^8.3.0",
     "ts-node-dev": "^1.0.0-pre.40",
     "typescript": "^3.5.2"
