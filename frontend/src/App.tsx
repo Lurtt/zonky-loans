@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components'
 import { Query, ApolloConsumer } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import { v4 } from 'uuid'
+import { useTranslation } from 'react-i18next'
 
 import { GlobalStyle, theme } from './components/settings'
 import { Card, Grid, Button, Title } from './components/atoms'
@@ -25,6 +26,7 @@ interface RatingData {
 }
 
 const Ratings: React.FC = () => {
+  const { t } = useTranslation()
   const [averageLoansAmount, setAverageLoansAmount] = useState(0)
   const [selectedRating, setSelectedRating] = useState('')
 
@@ -50,7 +52,7 @@ const Ratings: React.FC = () => {
             <ApolloConsumer>
               {client => (
                 <Fragment>
-                  <Title size="1.5rem">Choose rating</Title>
+                  <Title size="1.5rem">{t('RatingTitle')}</Title>
                   <Grid
                     padding="2rem 0"
                     templateColumns="repeat(auto-fit, minmax(5.5rem, 1fr))"
