@@ -1,5 +1,5 @@
 export const en = {
-  AppTitle: 'Zonky: Average loan calulator',
+  AppTitle: 'Zonky: Average loan calculator',
   RatingTitle: 'Choose rating',
   Engine: 'Powered by',
   Loading: 'Loading...',
